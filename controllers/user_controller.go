@@ -8,10 +8,9 @@ import (
 	"net/http"
 	"time"
 
-	"fmt"
-
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
+	"github.com/rs/zerolog/log"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -50,25 +49,24 @@ func CreateUser(c *fiber.Ctx) error {
 }
 
 func GetAUser(c *fiber.Ctx) error {
-	fmt.Println("works 1")
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	userId := c.Params("userId")
+	q := c.Queries()
+	userId := q["userId"]
 	var user models.User
 	defer cancel()
 
 	objId, _ := primitive.ObjectIDFromHex(userId)
-	fmt.Println("works 2")
 
-	err := userCollection.FindOne(ctx, bson.M{"id": objId}).Decode(&user)
+	err := userCollection.FindOne(ctx, bson.M{"_id": objId}).Decode(&user)
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(responses.UserResponse{Status: http.StatusInternalServerError, Message: "error", Data: &fiber.Map{"data": err.Error()}})
 	}
 
-	fmt.Println("works 3")
 	return c.Status(http.StatusOK).JSON(responses.UserResponse{Status: http.StatusOK, Message: "success", Data: &fiber.Map{"data": user}})
 }
 
 func GetAllUsers(c *fiber.Ctx) error {
+	log.Print("hello world from get all users")
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	var users []models.User
 	defer cancel()
