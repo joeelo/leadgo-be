@@ -9,7 +9,7 @@ type Program struct {
 	Bio          string             `json:"bio,omitempty" validate:"required"`
 	Href         string             `json:"href,omitempty" validate:"required"`
 	PartnerUrl   string             `json:"partnerUrl,omitempty" validate:"required"`
-	HelpsWith    []string
+	HelpsWith    []string           `json:"helpsWidth,omitempty"`
 	Organization struct {
 		program     bool
 		summer      bool
