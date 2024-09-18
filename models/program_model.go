@@ -10,10 +10,5 @@ type Program struct {
 	Href         string             `json:"href,omitempty" validate:"required"`
 	PartnerUrl   string             `json:"partnerUrl,omitempty" validate:"required"`
 	HelpsWith    []string           `json:"helpsWidth,omitempty"`
-	Organization struct {
-		program     bool
-		summer      bool
-		internship  bool
-		scholarship bool
-	}
+	Organization []bool             `json:"organization"`
 }

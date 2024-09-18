@@ -78,6 +78,7 @@ func GetAllPrograms(c *fiber.Ctx) error {
 
 	//reading from the db in an optimal way
 	defer results.Close(ctx)
+
 	for results.Next(ctx) {
 		var singleProgram models.Program
 		if err = results.Decode(&singleProgram); err != nil {

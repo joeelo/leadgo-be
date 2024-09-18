@@ -50,8 +50,7 @@ func CreateUser(c *fiber.Ctx) error {
 
 func GetAUser(c *fiber.Ctx) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	q := c.Queries()
-	userId := q["userId"]
+	userId := c.Params("userId")
 	var user models.User
 	defer cancel()
 

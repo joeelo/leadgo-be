@@ -26,6 +26,7 @@ func main() {
 	})
 
 	routes.UserRoute(app)
+	routes.PrgoramRoute(app)
 
 	app.Listen(":6000")
 }
